@@ -5,7 +5,7 @@
 Wanxiang Qin,is currently a full-time faculty member at the School of Arts and Design, Yulin Normal University, focusing on the application of computer vision technologies in city, with in-depth research in urban generation, lighting optimization, and related fields.
 
 #### Email
-msxy20230097[at]ylu.edu.cn
+msxy20230097@ylu.edu.cn
 
 #### Education
 M.E., Architecture, Inner Mongolia University of Technology, 2020—2023.\

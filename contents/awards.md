@@ -1,13 +1,11 @@
-- National Scholarship of Graduate Student, 2024.
+- <strong>Shenzhen Xkool Technology</strong>, 2021.06-2021.12.
+- Code and architecture construction of Python city generation Build a visual system for the digital architecture department using Python
 
-- First-prize Scholarship of CUMT, 2024.
+- <strong>Mitu Digital Technology</strong>, 2022.01-2022.07.
+- Write various interactive functions and character controllers using UE blueprints and Unity C# Writing shaders using UE material nodes and Unity Shader Graph
 
-- First-prize Scholarship of CUMT, 2023.
+- <strong>Shenzhen Qijing Forest Technology</strong>, 2022.07-2022.12.
+- Data interaction between front-end JavaScript and UE in UE cloud rendering platform Automated import of user uploaded models in UE cloud rendering platform
 
-- Freshman Scholarship of CUMT, 2022.
-
-- Excellent Graduation Project of Jiangsu Province, 2022.
-
-- First-prize Enterprise Scholarship of CUMT, 2020.
-
-- First-prize Scholarship of CUMT, 2019.
+- <strong>Yulin Normal University School</strong>, 2023.06-PRESENT.
+- full-time teacher
