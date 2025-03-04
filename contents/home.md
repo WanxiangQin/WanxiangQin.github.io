@@ -1,7 +1,6 @@
 
 
-[![senli1073](https://img.shields.io/badge/senli1073-github-blue?logo=github)](https://github.com/senli1073)
-
+#### Profile
 Wanxiang Qin,is currently a full-time faculty member at the School of Arts and Design, Yulin Normal University, focusing on the application of computer vision technologies in city, with in-depth research in urban generation, lighting optimization, and related fields.
 
 #### Email
