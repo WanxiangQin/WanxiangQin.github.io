@@ -201,8 +201,38 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // 方式零：优先使用 3dgsmodel/models.json 清单（适用于 Vercel/GitHub Pages 等静态托管）
+  const listViaManifest = async () => {
+    try {
+      const res = await fetch(`${base}/models.json`);
+      if (!res.ok) return [];
+      const data = await res.json();
+      const arr = Array.isArray(data) ? data : data.models;
+      if (!Array.isArray(arr)) return [];
+      const out = [];
+      for (const item of arr) {
+        const p = typeof item === 'string' ? item : item?.path;
+        if (!p) continue;
+        const ext = p.split('.').pop().toLowerCase();
+        if (!allowedExt.has(ext)) continue;
+        const url = `${base}/${p}`;
+        let size = typeof item === 'object' && item && typeof item.size === 'number' ? item.size : NaN;
+        if (!size || isNaN(size) || size === 0) {
+          size = await fetchSize(url).catch(() => NaN);
+        }
+        out.push({ url, size, ext, name: p.split('/').pop() });
+      }
+      return out;
+    } catch {
+      return [];
+    }
+  };
+
   const discoverModels = async () => {
-    // 优先尝试目录索引（同源路径），获取到相对路径列表
+    // 1) 优先尝试 manifest
+    const manifestList = await listViaManifest();
+    if (manifestList.length > 0) return manifestList;
+    // 2) 其次尝试目录索引（同源路径）
     const htmlList = await listViaHtml(base);
     if (htmlList.length > 0) {
       const out = [];

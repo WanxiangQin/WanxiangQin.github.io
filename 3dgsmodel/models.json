@@ -1,0 +1,14 @@
+{
+  "models": [
+    { "path": "a-小型3DGS特殊效果.ply", "size": 0 },
+    { "path": "bonsai/bonsai.ksplat", "size": 0 },
+    { "path": "bonsai/bonsai_high.ksplat", "size": 0 },
+    { "path": "bonsai/bonsai_trimmed.ksplat", "size": 0 },
+    { "path": "garden/garden.ksplat", "size": 0 },
+    { "path": "garden/garden_high.ksplat", "size": 0 },
+    { "path": "stump/stump.ksplat", "size": 0 },
+    { "path": "stump/stump_high.ksplat", "size": 0 },
+    { "path": "truck/truck.ksplat", "size": 0 },
+    { "path": "truck/truck_high.ksplat", "size": 0 }
+  ]
+}
