@@ -1,177 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Academic Webpage" />
-    <meta name="author" content="senli1073" />
-    <title id="title"></title>
-
-    <!-- Icon -->
-    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <!-- Google fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap"
-        rel="stylesheet" />
-
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link type="text/css" href="static/css/styles.css" rel="stylesheet" />
-    <link type="text/css" href="static/css/main.css" rel="stylesheet" />
-
-    <!-- Bootstrap core JS-->
-    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
-
-    <!-- For Compatability -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    
-    <!-- Markdown -->
-    <script type="text/javascript" src="static/js/marked.min.js"></script>
-
-    <!-- Mathematics -->
-    <script>
-        // See https://docs.mathjax.org/en/latest/index.html for more details.
-        MathJax = {
-            tex: {
-                packages: {},              // extensions to use
-                inlineMath: [              // start/end delimiter pairs for in-line math
-                    ['$', '$'],
-                    ['\\(', '\\)']
-                ],
-                displayMath: [             // start/end delimiter pairs for display math
-                    ['$$', '$$'],
-                    ['\\[', '\\]']
-                ],
-                processEscapes: false,      // use \$ to produce a literal dollar sign
-                processEnvironments: true, // process \begin{xxx}...\end{xxx} outside math mode
-                processRefs: true,         // process \ref{...} outside of math mode
-                digits: /^(?:[0-9]+(?:\{,\}[0-9]{3})*(?:\.[0-9]*)?|\.[0-9]+)/,    // pattern for recognizing numbers
-                tags: 'all',              // or 'ams' or 'all'
-                tagSide: 'right',          // side for \tag macros
-                tagIndent: '0.8em',        // amount to indent tags
-                useLabelIds: true,         // use label name rather than tag for ids
-                maxMacros: 10000,          // maximum number of macro substitutions per expression
-                maxBuffer: 5 * 1024,       // maximum size for the internal TeX string (5K)
-                // baseURL:                   // URL for use with links to tags (when there is a <base> tag in effect)
-                // (document.getElementsByTagName('base').length === 0) ? '' : String(document.location).replace(/#.*$/, ''),
-                formatError:               // function called when TeX syntax errors occur
-                    (jax, err) => jax.formatError(err)
-            }
-        };
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wanxiang Qin · 3DGS 展示</title>
+    <meta name="description" content="Wanxiang Qin（覃万祥）个人信息与 3D Gaussian Splatting 模型展示" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/GaussianSplats3D-main/build/demo/lib/three.module.js",
+          "@mkkellogg/gaussian-splats-3d": "/GaussianSplats3D-main/build/gaussian-splats-3d.module.js"
+        }
+      }
     </script>
-    <script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <!-- Core JS-->
-    <script type="text/javascript" src="static/js/scripts.js"></script>
-    <script type="text/javascript" src="static/js/js-yaml.min.js"></script>
-
-</head>
-
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="header navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
-        <div class="container px-5">
-            <a id="page-top-title" class="navbar-brand fw-bold" href="#page-top"></a>
-            <!-- <a href="#page-top"><img src="static/assets/img/CUMT_LOGO.svg" style="width: 11rem;"></a> -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                MENU
-                <i class="bi-list"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#page-top">HOME</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#publications">PUBLICATIONS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link me-lg-3" href="#awards">WORK EXPERIENCE</a>
-                    </li>
-
-                </ul>
-            </div>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div>
+          <h1 class="site-title">Wanxiang Qin | 覃万祥</h1>
+          <p class="site-subtitle">Computer Vision · Urban Generation · Lighting Optimization</p>
         </div>
-    </nav>
+        <nav class="nav">
+          <a href="#about">个人简介</a>
+          <a href="#viewer">3DGS 展示</a>
+          <a href="#contact">联系方式</a>
+        </nav>
+      </div>
+    </header>
 
-    <!-- Top Section -->
-    <section class="top-section" style="background-image: url('static/assets/img/background.jpg');">
-        <div class="top-section-content">
-            <div class="container px-5">
-                <h2 id="top-section-bg-text" class="text-white display-3 lh-1 font-alt"></h2>
-            </div>
+    <main class="container">
+      <section id="about" class="card">
+        <h2>Profile</h2>
+        <p class="profile-meta">
+          Website: <a href="https://wanxiangqin.github.io" target="_blank">wanxiangqin.github.io</a>
+          · Email: <a href="mailto:msxy20230097@ylu.edu.cn">msxy20230097@ylu.edu.cn</a>
+        </p>
+        <p>
+          Wanxiang Qin is currently a full-time faculty member at the School of Arts and Design, Yulin Normal University, focusing on the application of computer vision technologies in city, with in-depth research in urban generation, lighting optimization, and related fields.
+        </p>
+
+        <h3>Education</h3>
+        <ul class="bullets">
+          <li>M.E., Architecture, Inner Mongolia University of Technology, 2020—2023.</li>
+          <li>B.E., Architecture, Guangxi University of Science and Technology, 2015—2020.</li>
+        </ul>
+
+        <h3>Research Interests</h3>
+        <p class="bullets">computer vision (CV) tasks such as object detection, digital twins, 3D reconstruction, drone path planning.</p>
+
+        <h3>Publications</h3>
+        <ul class="bullets">
+          <li>WanXiang Qin, Ji Li, Peng Qu, Zhen Tian, Liang Tan (2025). PPA-Enhanced YOLOv10: Real-Time Detection of Small UAVs in Complex Environments. 2025 2nd International Conference on Autonomous Driving and Intelligent Sensing Technology (ADIST 2025).</li>
+          <li>Wanxiang Qin, Yuxuan Liu, Yuan Sun, Research on traffic target detection optimization based on YOLOv11, 2025 8th International Conference on Advanced Algorithms and Control Engineering (ICAACE 2025).</li>
+          <li>Qin Wanxiang (2023). Research on Multi Objective Optimization of High rise Residential Buildings in Severe Cold Regions Based on Energy Consumption and Solar Thermal Performance, Master's Thesis, Inner Mongolia University of Technology.</li>
+          <li>Qin Wanxiang, He Long* & Qin Chaopeng (2022). Exploration of optimization method for lighting in primary and secondary school classrooms based on genetic algorithm - taking the light climate in Hohhot area as an example, Contemporary Architecture.</li>
+        </ul>
+
+        <h3>Work Experience</h3>
+        <ul class="bullets">
+          <li>
+            Shenzhen Xkool Technology, 2021.06–2021.12. — Code and architecture construction of Python city generation; built a visual system for the digital architecture department using Python.
+          </li>
+          <li>
+            Mitu Digital Technology, 2022.01–2022.07. — Wrote interactive functions and character controllers using UE Blueprints and Unity C#; authored shaders with UE material nodes and Unity Shader Graph.
+          </li>
+          <li>
+            Shenzhen Qijing Forest Technology, 2022.07–2022.12. — Implemented data interaction between front-end JavaScript and UE in UE cloud rendering platform; automated import of user uploaded models in UE cloud rendering platform.
+          </li>
+          <li>
+            Yulin Normal University School, 2023.06–PRESENT. — Full-time teacher.
+          </li>
+        </ul>
+      </section>
+
+      <section id="viewer" class="card">
+        <div class="viewer-header">
+          <h2>3DGS 展示（ThreeJS · Gaussian Splatting）</h2>
+          <div class="viewer-controls">
+            <button id="btnLoadPLY">加载示例 PLY（/3dgsmodel）</button>
+            <select id="modelSelect"></select>
+            <button id="btnLoadSelected">加载所选模型</button>
+            <label class="file-input">
+              <input type="file" id="fileInput" accept=".ply,.splat,.ksplat" />
+              <span>导入 PLY/SPLAT/KSPLAT 文件</span>
+            </label>
+          </div>
         </div>
-    </section>
-    <!-- Top Section -->
-
-    <!-- Photo -->
-    <div class="container px-5">
-        <div id="avatar">
-            <img class="shadow" src="static/assets/img/photo.jpg">
+        <div class="viewer-canvas-wrap">
+          <div id="threeRoot" style="width:100%;height:100%;"></div>
+          <div id="viewerStatus" class="viewer-status">未加载</div>
         </div>
-    </div>
-    <!-- Photo -->
-    
-    <!-- Home -->
-    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="home">
-        <div class="container px-5">
-            <header>
-                <h2 id="home-subtitle"> </h2>
-                <!-- <span class="bi bi-list"></span> -->
-            </header>
-            <div class="main-body" id="home-md"></div>
-        </div>
-    </section>
-    <!-- Home -->
+        <details class="note">
+          <summary>说明</summary>
+          <p>
+            该展示基于 ThreeJS 与 GaussianSplats3D 库，直接读取 `.ply/.splat/.ksplat` 文件进行高斯点渲染，并提供交互查看。
+            如需手动构造数据可参考 JSON 示例（非必须）：
+          </p>
+          <pre><code>{
+  "gaussians": [
+    { "position": [x, y, z], "color": [r, g, b], "scale": s, "sigma": [sx, sy], "rot": r },
+    { "position": [x, y, z], "color": [r, g, b], "scale": s }
+  ]
+}</code></pre>
+          <p>
+            其中颜色范围为 0–1，尺度为粒子的基本大小；可选的 `sigma=[sx,sy]` 与 `rot`（弧度）用于各向异性椭圆与旋转。生产环境建议使用 `.ksplat` 以获得更佳加载与渲染表现。
+          </p>
+        </details>
+      </section>
 
-    <!-- Publications -->
-    <section class="bg-gradient-primary-to-secondary-gray mt5 md5" id="publications">
-        <div class="container px-5">
-            <header>
-                <h2 id="publications-subtitle"><i class="bi bi-file-text-fill"></i>&nbsp;PUBLICATIONS</h2>
-            </header>
-            <div class="main-body" id="publications-md"></div>
+      <section id="contact" class="card">
+        <h2>联系方式</h2>
+        <ul class="contact-list">
+          <li>邮箱：<a href="mailto:msxy20230097@ylu.edu.cn">msxy20230097@ylu.edu.cn</a></li>
+          <li>网站：<a href="https://wanxiangqin.github.io" target="_blank">wanxiangqin.github.io</a></li>
+        </ul>
+      </section>
+    </main>
 
-        </div>
-    </section>
-    <!-- Publications  -->
-
-    <!-- Awards -->
-    <section class="bg-gradient-primary-to-secondary-light mt5 md5" id="awards">
-        <div class="container px-5">
-            <header>
-                <h2 id="awards-subtitle"><i class="bi bi-person-vcard-fill"></i>WORK EXPERIENCE </h2>
-            </header>
-            <div class="main-body" id="awards-md"></div>
-
-        </div>
-    </section>
-    <!-- Awards -->
-
-
-    <!-- Footer-->
-    <footer class="bg-bottom text-center py-5">
-        <div class="container px-5">
-            <div class="text-white-50 small">
-                <div id="copyright-text" class="mb-2"></div>
-                <a id="github-link" href="https://github.com/senli1073">Github</a>
-                <span class="mx-1">&middot;</span>
-                <a id="license-link" href="https://github.com/senli1073/senli1073.github.io/blob/main/LICENSE">License</a>
-            </div>
-        </div>
+    <footer class="site-footer">
+      <div class="container">
+        <small>© 2025 Wanxiang Qin · 保留所有权利</small>
+      </div>
     </footer>
 
-</body>
-
+    <script type="module" src="js/app.js"></script>
+  </body>
 </html>
