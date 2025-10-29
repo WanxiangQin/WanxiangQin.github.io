@@ -22,6 +22,17 @@ const viewer = new Viewer({
   initialCameraLookAt: [0, 0, 0],
 });
 
+// 计算在 GitHub Pages 下的站点前缀（项目页需要 /<repo> 前缀，用户页不需要）
+function getBasePrefix() {
+  const host = location.hostname;
+  const isGithub = host.endsWith('github.io');
+  if (!isGithub) return '';
+  const owner = host.split('.')[0];
+  const segs = location.pathname.split('/').filter(Boolean);
+  const repo = segs[0] || `${owner}.github.io`;
+  return repo === `${owner}.github.io` ? '' : `/${repo}`;
+}
+
 let started = false;
 async function clearScenes() {
   const count = viewer.getSceneCount?.() || 0;
@@ -76,7 +87,8 @@ async function addScene(pathOrUrl, opts = {}) {
 }
 
 btnLoadPLY?.addEventListener('click', () => {
-  addScene('/3dgsmodel/a-小型3DGS特殊效果.ply', {
+  const basePrefix = getBasePrefix();
+  addScene(`${basePrefix}/3dgsmodel/a-小型3DGS特殊效果.ply`, {
     format: SceneFormat.Ply,
     splatAlphaRemovalThreshold: 0,
   });
@@ -96,7 +108,8 @@ window.addEventListener('resize', () => viewer.onWindowResize());
 // 页面加载后自动尝试加载示例，便于快速验证
 window.addEventListener('DOMContentLoaded', () => {
   setStatus('未加载，选择模型后点击“加载所选模型”。');
-  const base = '/3dgsmodel';
+  const basePrefix = getBasePrefix();
+  const base = `${basePrefix}/3dgsmodel`;
   const allowedExt = new Set(['ply', 'ksplat', 'splat']);
 
   const toReadableSize = (bytes) => {
@@ -159,7 +172,8 @@ window.addEventListener('DOMContentLoaded', () => {
       const host = location.hostname;
       if (!host.endsWith('github.io')) return [];
       const owner = host.split('.')[0];
-      const repo = `${owner}.github.io`;
+      const segs = location.pathname.split('/').filter(Boolean);
+      const repo = segs[0] || `${owner}.github.io`;
       const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents/`;
 
       const walk = async (path) => {
@@ -180,8 +194,8 @@ window.addEventListener('DOMContentLoaded', () => {
         return acc;
       };
       const list = await walk('3dgsmodel');
-      // 返回统一结构
-      return list.map(x => ({ url: x.path, size: x.size, ext: x.ext, name: x.path.split('/').pop() }));
+      // 返回统一结构（GitHub Pages 项目页需加前缀）
+      return list.map(x => ({ url: `${basePrefix}/${x.path}`, size: x.size, ext: x.ext, name: x.path.split('/').pop() }));
     } catch {
       return [];
     }
