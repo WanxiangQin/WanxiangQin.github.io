@@ -96,23 +96,11 @@ window.addEventListener('resize', () => viewer.onWindowResize());
 // 页面加载后自动尝试加载示例，便于快速验证
 window.addEventListener('DOMContentLoaded', () => {
   setStatus('未加载，选择模型后点击“加载所选模型”。');
-  // 构建模型列表（相对路径）
   const base = '/3dgsmodel';
-  const models = [
-    'a-小型3DGS特殊效果.ply',
-    'bonsai/bonsai.ksplat',
-    'bonsai/bonsai_high.ksplat',
-    'bonsai/bonsai_trimmed.ksplat',
-    'garden/garden.ksplat',
-    'garden/garden_high.ksplat',
-    'stump/stump.ksplat',
-    'stump/stump_high.ksplat',
-    'truck/truck.ksplat',
-    'truck/truck_high.ksplat',
-  ];
+  const allowedExt = new Set(['ply', 'ksplat', 'splat']);
 
   const toReadableSize = (bytes) => {
-    if (!bytes || isNaN(bytes)) return '大小未知';
+    if (bytes == null || isNaN(bytes)) return '大小未知';
     const mb = bytes / (1024 * 1024);
     if (mb >= 1) return `${mb.toFixed(2)} MB`;
     const kb = bytes / 1024;
@@ -129,21 +117,128 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // 方式一：尝试解析服务器的目录索引页面（本地 serve 可用）
+  const listViaHtml = async (dirUrl) => {
+    try {
+      const res = await fetch(dirUrl);
+      const ct = res.headers.get('content-type') || '';
+      if (!res.ok || !ct.includes('text/html')) return [];
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const anchors = Array.from(doc.querySelectorAll('a[href]'));
+      const entries = anchors.map(a => {
+        const href = a.getAttribute('href');
+        try {
+          const url = new URL(href, dirUrl);
+          return url.pathname;
+        } catch {
+          return null;
+        }
+      }).filter(Boolean);
+      // 递归遍历子目录
+      const files = [];
+      for (const p of entries) {
+        if (p.endsWith('/')) {
+          const sub = await listViaHtml(p);
+          files.push(...sub);
+        } else {
+          const ext = p.split('.').pop().toLowerCase();
+          if (allowedExt.has(ext)) files.push(p);
+        }
+      }
+      // 去重
+      return Array.from(new Set(files));
+    } catch {
+      return [];
+    }
+  };
+
+  // 方式二：GitHub Pages 下使用 GitHub API 递归列出文件
+  const listViaGithub = async () => {
+    try {
+      const host = location.hostname;
+      if (!host.endsWith('github.io')) return [];
+      const owner = host.split('.')[0];
+      const repo = `${owner}.github.io`;
+      const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents/`;
+
+      const walk = async (path) => {
+        const res = await fetch(apiBase + path);
+        if (!res.ok) return [];
+        const items = await res.json();
+        const acc = [];
+        for (const it of items) {
+          if (it.type === 'dir') {
+            acc.push(...(await walk(it.path)));
+          } else if (it.type === 'file') {
+            const ext = it.name.split('.').pop().toLowerCase();
+            if (allowedExt.has(ext)) {
+              acc.push({ path: `/${it.path}`, size: it.size, ext });
+            }
+          }
+        }
+        return acc;
+      };
+      const list = await walk('3dgsmodel');
+      // 返回统一结构
+      return list.map(x => ({ url: x.path, size: x.size, ext: x.ext, name: x.path.split('/').pop() }));
+    } catch {
+      return [];
+    }
+  };
+
+  const discoverModels = async () => {
+    // 优先尝试目录索引（同源路径），获取到相对路径列表
+    const htmlList = await listViaHtml(base);
+    if (htmlList.length > 0) {
+      const out = [];
+      for (const p of htmlList) {
+        const ext = p.split('.').pop().toLowerCase();
+        const size = await fetchSize(p).catch(() => NaN);
+        out.push({ url: p, size, ext, name: p.split('/').pop() });
+      }
+      return out;
+    }
+    // GitHub API 作为回退方案（仅 github.io 域名）
+    const ghList = await listViaGithub();
+    if (ghList.length > 0) return ghList;
+    // 最后回退到静态内置列表（防止完全不可用）
+    const fallback = [
+      `${base}/a-小型3DGS特殊效果.ply`,
+      `${base}/bonsai/bonsai.ksplat`,
+      `${base}/bonsai/bonsai_high.ksplat`,
+      `${base}/bonsai/bonsai_trimmed.ksplat`,
+      `${base}/garden/garden.ksplat`,
+      `${base}/garden/garden_high.ksplat`,
+      `${base}/stump/stump.ksplat`,
+      `${base}/stump/stump_high.ksplat`,
+      `${base}/truck/truck.ksplat`,
+      `${base}/truck/truck_high.ksplat`,
+    ];
+    return await Promise.all(fallback.map(async (u) => {
+      const name = u.split('/').pop();
+      const ext = name.split('.').pop().toLowerCase();
+      const size = await fetchSize(u).catch(() => NaN);
+      return { url: u, size, ext, name };
+    }));
+  };
+
   const populateSelect = async () => {
     if (!modelSelect) return;
     modelSelect.innerHTML = '';
-    for (const rel of models) {
-      const url = `${base}/${rel}`;
-      const size = await fetchSize(url);
-      const name = rel.split('/').pop();
+    const items = await discoverModels();
+    for (const it of items) {
       const opt = document.createElement('option');
-      opt.value = url;
-      opt.textContent = `${name} (${toReadableSize(size)})`;
-      opt.dataset.ext = rel.split('.').pop().toLowerCase();
+      opt.value = it.url;
+      opt.textContent = `${it.name} (${toReadableSize(it.size)})`;
+      opt.dataset.ext = it.ext;
       modelSelect.appendChild(opt);
     }
   };
-  populateSelect();
+
+  populateSelect().catch((e) => {
+    console.warn('Populate model list failed:', e);
+  });
 });
 
 btnLoadSelected?.addEventListener('click', () => {
