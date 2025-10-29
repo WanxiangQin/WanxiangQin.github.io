@@ -216,10 +216,9 @@ window.addEventListener('DOMContentLoaded', () => {
         const ext = p.split('.').pop().toLowerCase();
         if (!allowedExt.has(ext)) continue;
         const url = `${base}/${p}`;
-        let size = typeof item === 'object' && item && typeof item.size === 'number' ? item.size : NaN;
-        if (!size || isNaN(size) || size === 0) {
-          size = await fetchSize(url).catch(() => NaN);
-        }
+        const size = typeof item === 'object' && item && typeof item.size === 'number' && item.size > 0 
+          ? item.size 
+          : NaN;
         out.push({ url, size, ext, name: p.split('/').pop() });
       }
       return out;
@@ -271,6 +270,11 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!modelSelect) return;
     modelSelect.innerHTML = '';
     const items = await discoverModels();
+    if (!items || items.length === 0) {
+      setStatus('未发现模型：请确认 /3dgsmodel/models.json 可访问且内容正确');
+    } else {
+      setStatus(`已发现 ${items.length} 个模型，可选择后加载`);
+    }
     for (const it of items) {
       const opt = document.createElement('option');
       opt.value = it.url;
