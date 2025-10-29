@@ -297,5 +297,15 @@ btnLoadSelected?.addEventListener('click', () => {
   if (ext === 'ply') format = SceneFormat.Ply;
   else if (ext === 'ksplat') format = SceneFormat.KSplat;
   else if (ext === 'splat') format = SceneFormat.Splat;
-  addScene(url, { format, splatAlphaRemovalThreshold: 0 });
+  setStatus(`准备加载：${url}（类型：${ext || '自动识别'}）`);
+  try {
+    addScene(url, { format, splatAlphaRemovalThreshold: 0 })
+      .catch((e) => {
+        console.error('加载失败（异步）:', e);
+        setStatus(`加载失败：${e?.message || e}`);
+      });
+  } catch (e) {
+    console.error('加载失败（同步）:', e);
+    setStatus(`加载失败：${e?.message || e}`);
+  }
 });
