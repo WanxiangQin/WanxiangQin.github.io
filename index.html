@@ -20,12 +20,12 @@
       <div class="container header-inner">
         <div>
           <h1 class="site-title">Wanxiang Qin | 覃万祥</h1>
-          <p class="site-subtitle">Computer Vision · Urban Generation · Lighting Optimization</p>
+          <p class="site-subtitle">Computer Vision · 3D Gaussian Splatting · Unreal Engine</p>
         </div>
         <nav class="nav">
-          <a href="#about">个人简介</a>
-          <a href="#viewer">3DGS 展示</a>
-          <a href="#contact">联系方式</a>
+          <a href="#about">Profile</a>
+          <a href="#viewer">3DGS</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
     </header>
@@ -38,7 +38,7 @@
           · Email: <a href="mailto:msxy20230097@ylu.edu.cn">msxy20230097@ylu.edu.cn</a>
         </p>
         <p>
-          Wanxiang Qin is currently a full-time faculty member at the School of Arts and Design, Yulin Normal University, focusing on the application of computer vision technologies in city, with in-depth research in urban generation, lighting optimization, and related fields.
+          Wanxiang Qin is currently a full-time faculty member at the School of Arts and Design, Yulin Normal University, 3D Gaussian Splatting, Unreal Engine rendering pipeline ,and related fields.
         </p>
 
         <h3>Education</h3>
@@ -52,10 +52,10 @@
 
         <h3>Publications</h3>
         <ul class="bullets">
+          <li>Qin Wanxiang,Hoi Leong Lee. Material-Aware 3D Gaussian Splatting: Learning Spatially Varying BRDF with Physics-Based Material Priors(CSCWD2025)(CCF C)</li>
           <li>WanXiang Qin, Ji Li, Peng Qu, Zhen Tian, Liang Tan (2025). PPA-Enhanced YOLOv10: Real-Time Detection of Small UAVs in Complex Environments. 2025 2nd International Conference on Autonomous Driving and Intelligent Sensing Technology (ADIST 2025).</li>
-          <li>Wanxiang Qin, Yuxuan Liu, Yuan Sun, Research on traffic target detection optimization based on YOLOv11, 2025 8th International Conference on Advanced Algorithms and Control Engineering (ICAACE 2025).</li>
+          <li>MingChen, WanXiang Qin, Tomato Ripeness Detection Method Based on FasterNet Block and Attention Mechanism (AIP Advances) (SCI Q4).</li>
           <li>Qin Wanxiang (2023). Research on Multi Objective Optimization of High rise Residential Buildings in Severe Cold Regions Based on Energy Consumption and Solar Thermal Performance, Master's Thesis, Inner Mongolia University of Technology.</li>
-          <li>Qin Wanxiang, He Long* & Qin Chaopeng (2022). Exploration of optimization method for lighting in primary and secondary school classrooms based on genetic algorithm - taking the light climate in Hohhot area as an example, Contemporary Architecture.</li>
         </ul>
 
         <h3>Work Experience</h3>
@@ -77,26 +77,26 @@
 
       <section id="viewer" class="card">
         <div class="viewer-header">
-          <h2>3DGS 展示（ThreeJS · Gaussian Splatting）</h2>
+          <h2>3DGS Display(ThreeJS · Gaussian Splatting)</h2>
           <div class="viewer-controls">
-            <button id="btnLoadPLY">加载示例 PLY（/3dgsmodel）</button>
+            <button id="btnLoadPLY">Load example PLY(/3dgsmodel)</button>
             <select id="modelSelect"></select>
-            <button id="btnLoadSelected">加载所选模型</button>
+            <button id="btnLoadSelected">Load the selected model</button>
             <label class="file-input">
               <input type="file" id="fileInput" accept=".ply,.splat,.ksplat" />
-              <span>导入 PLY/SPLAT/KSPLAT 文件</span>
+              <span>import PLY/SPLAT/KSPLAT </span>
             </label>
           </div>
         </div>
         <div class="viewer-canvas-wrap">
           <div id="threeRoot" style="width:100%;height:100%;"></div>
-          <div id="viewerStatus" class="viewer-status">未加载</div>
+          <div id="viewerStatus" class="viewer-status">Not loaded</div>
         </div>
         <details class="note">
-          <summary>说明</summary>
+          <summary>Instructions</summary>
           <p>
-            该展示基于 ThreeJS 与 GaussianSplats3D 库，直接读取 `.ply/.splat/.ksplat` 文件进行高斯点渲染，并提供交互查看。
-            如需手动构造数据可参考 JSON 示例（非必须）：
+            This display is built upon the ThreeJS and GaussianSplats3D libraries, directly reading `.ply/.splat/.ksplat` files for Gaussian point rendering, and offering interactive viewing.
+            If manual data construction is required, refer to the JSON example (optional):
           </p>
           <pre><code>{
   "gaussians": [
@@ -105,23 +105,23 @@
   ]
 }</code></pre>
           <p>
-            其中颜色范围为 0–1，尺度为粒子的基本大小；可选的 `sigma=[sx,sy]` 与 `rot`（弧度）用于各向异性椭圆与旋转。生产环境建议使用 `.ksplat` 以获得更佳加载与渲染表现。
+            The color range is 0–1, and the scale is the basic size of the particles; optional `sigma=[sx,sy]` and `rot` (radians) are used for anisotropic ellipses and rotations. In production environments, it is recommended to use `.ksplat` for better loading and rendering performance.
           </p>
         </details>
       </section>
 
       <section id="contact" class="card">
-        <h2>联系方式</h2>
+        <h2>Contact</h2>
         <ul class="contact-list">
-          <li>邮箱：<a href="mailto:msxy20230097@ylu.edu.cn">msxy20230097@ylu.edu.cn</a></li>
-          <li>网站：<a href="https://wanxiangqin.github.io" target="_blank">wanxiangqin.github.io</a></li>
+          <li>EMAIL:<a href="mailto:msxy20230097@ylu.edu.cn">msxy20230097@ylu.edu.cn</a></li>
+          <li>WEBSITE:<a href="https://wanxiangqin.github.io" target="_blank">wanxiangqin.github.io</a></li>
         </ul>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="container">
-        <small>© 2025 Wanxiang Qin · 保留所有权利</small>
+        <small>© 2025 Wanxiang Qin · All rights reserved</small>
       </div>
     </footer>
 
